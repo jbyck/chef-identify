@@ -1,0 +1,4 @@
+# Ignore rbenv settings
+.ruby-version
+.rbenv-gemsets.kitchen/
+.kitchen.local.yml
