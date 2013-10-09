@@ -1,33 +1,39 @@
 # chef-identify Cookbook
 
-Identify your nodes with colors.
+Clearly identify your Chef nodes through your bash prompt.  
 
-This cookbook overrides the PS1 variable via the PROMPT_COMMAND variable. 
+### Overview
 
-### recipes
+This cookbook customizes the color of the Ubuntu bash prompt by overriding the PS1 environment variable. 
 
-#### default
 
-Creates a file in the /etc/profile.d directory which will be loaded in every bash session.
+### Recipes
 
-### attributes
+#### system_install
 
-default[:identify][:file]   - The name of the file created in the /etc/profile.d directory.
-default[:identify][:color]  - The color of the prompt.
+Overrides PS1 for every user of the system by setting PS1 from PROMPT_COMMAND.
+
+### Attributes
+
+* default[:identify][:file]   - The name of the file created in the /etc/profile.d directory.
+* default[:identify][:color]  - The color of the prompt.
 
 #### usage
 
-Supported colors: 
+The prompt can be displayed with any of the following supported colors: 
 
-* light purple
-* purple
-* brown
 * white
+* purple
+* light purple
+* brown
 * red
+* light red
 * blue
 * light blue
 * yellow
 * black
+* cyan
+* light cyan
 
 Add default recipe to run list:
 
@@ -39,8 +45,14 @@ Set color using node attributes:
 
 ``` ruby
 identify: {
+  file: 'identify.sh'
   color: 'red'
 }
 ```
+* NOTE: The changes made by this cookbook are only visible in LOGIN shells.
 
 
+### Roadmap
+
+* user_install
+* customize text

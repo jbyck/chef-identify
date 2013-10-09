@@ -6,22 +6,11 @@
 #
 # All rights reserved - Do Not Redistribute
 #
+
+# Nothing to see here.
+# Usage:
+# # identify::system_install
+
 class Chef::Recipe
-  include Identify
+  include Chef::Identify
 end
-
-prompt = generate_prompt
-
-directory "/etc/profile.d" do
-  owner   "root"
-  mode    "0755"
-end
-
-template "/etc/profile.d/#{node[:identify][:file]}" do
-  owner 'root'
-  mode '0755'
-  source 'identify.sh.erb'
-  variables({:prompt => prompt})
-end
-
-
