@@ -8,13 +8,8 @@
 #
 include_recipe 'identify'
 
-colors = get_all_colors
-
-user_color = node[:identify][:color].to_sym
-unless supported_colors.include?(user_color)
-  Chef::Log.warn "Unknown color #{user_color}. Using #{default_color}."
-  user_color = default_color
-end
+colors      = get_all_colors
+user_color  = get_user_color
 
 Chef::Log.debug "Identifying with user color #{user_color.to_s}"
 

@@ -5,23 +5,26 @@ class Chef
     
       # Default color to use if no (or invalid color) is specified
       DEFAULT_COLOR = :white
+      
+      COLOR_START = '\[\033['
+      COLOR_END   = '\]'
 
       # List of supported colors
       COLORS = {
-        :white => '\e[1;37m\]',
-        :purple => '\e[0;35m\]',
-        :light_purple => '\e[1;35m\]',
-        :brown => '\e[1;31m\]',
-        :red => '\e[0;31m\]',
-        :light_red => '\e[1;31m\]',
-        :blue => '\e[0;34m\]',
-        :light_blue => '\e[1;34m\]',
-        :yellow => '\e[0;33m\]',
-        :black => '\e[0;30m\]',
-        :cyan => '\e[0;36m\]',
-        :light_cyan => '\e[1;36m\]'
+        :white => '1;37m',
+        :purple => '0;35m',
+        :light_purple => '1;35m',
+        :brown => '1;31m',
+        :red => '0;31m',
+        :light_red => '1;31m',
+        :blue => '0;34m',
+        :light_blue => '1;34m',
+        :yellow => '0;33m',
+        :black => '0;30m',
+        :cyan => '0;36m',
+        :light_cyan => '1;36m'
       }
-      
+
       # Default color for library
       #
       # Returnst symbol
@@ -35,13 +38,38 @@ class Chef
       def supported_colors
         COLORS.keys
       end
+      
+      # Return the code for the given color
+      #
+      # color - Name of the color
+      # 
+      # Returns string
+      def code_for_color(color)
+        "#{COLOR_START}#{COLORS[color.to_sym]}#{COLOR_END}"
+      end
   
       # Supported color and bash code
       #
       #
       # Returns hash
       def get_all_colors
-        COLORS
+        colors = {}
+        supported_colors.map { |c| colors[c] = code_for_color(c) }
+        colors
+      end
+      
+      
+      # Retrieve the name of the user specified color. Use the node value of node[:identify][:color].
+      # If that color is not in the supported_colors array, then use default color
+      #
+      # Returns symbol
+      def get_user_color
+        user_color = node[:identify][:color].to_sym
+        unless supported_colors.include?(user_color)
+          Chef::Log.warn "Unknown color #{user_color}. Using #{default_color}."
+          user_color = default_color
+        end
+        user_color
       end
       
       

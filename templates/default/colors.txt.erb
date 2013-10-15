@@ -1,5 +1,4 @@
 # List of colors supported
-RESET="\[\033[0m\]"    # reset
 <%- @colors.each do |name, code| %>
 <%= to_bash(name) %>="<%= code %>"
 <%- end %>
