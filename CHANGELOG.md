@@ -1,4 +1,4 @@
-#chef-bash-color CHANGELOG
+#chef-identify CHANGELOG
 
 ## 0.1.1
 
