@@ -1,5 +1,9 @@
 #chef-identify CHANGELOG
 
+## 0.2.0
+
+* Add support for custom prompt using Chef node name.
+
 ## 0.1.1
 
 * Move user_color logic to Chef::Identify module.
