@@ -5,6 +5,6 @@ RESET="\[\033[0m\]"    # reset
 <%= render 'colors.txt.erb', :local => false, :variables => { :colors => @colors } %>
 
 function set_prompt {
-  export PS1="<%= to_bash_variable(@user_color) %>$PS1$RESET"
+  export PS1="<%= to_bash_variable(@user_color) %><%= @user_prompt %>$RESET"
 }
 export PROMPT_COMMAND=set_prompt

@@ -5,8 +5,11 @@ class Chef
     
       # Default color to use if no (or invalid color) is specified
       DEFAULT_COLOR = :white
-      
+
+      # Character used to start color code
       COLOR_START = '\[\033['
+      
+      # Character used to end color code
       COLOR_END   = '\]'
 
       # List of supported colors
@@ -24,6 +27,13 @@ class Chef
         :cyan => '0;36m',
         :light_cyan => '1;36m'
       }
+
+      # Identify user in prompt
+      PROMPT_USER = '\u'
+      # Identify host in prompt
+      PROMPT_HOST = '\h'
+      # Identify path in prompt
+      PROMPT_PATH = '\w'     
 
       # Default color for library
       #
@@ -58,6 +68,21 @@ class Chef
         colors
       end
       
+      # Is the node configured and able to use the node name in the prompt
+      #
+      # Returns boolean
+      def use_node_name?
+        Chef::Log.debug "USE NODE: #{node[:identify][:use_node_name]}"
+        Chef::Log.debug [true, 'true', 't', 'yes'].include?(node[:identify][:use_node_name])
+        [true, 'true', 't', 'yes'].include?(node[:identify][:use_node_name])
+      end
+      
+      # Generate a string to use as the PS1 prompt, using the node name
+      #
+      # Returns string
+      def get_prompt_with_node_name
+        "#{PROMPT_USER}@#{node.name}:#{PROMPT_PATH}\\$ "
+      end
       
       # Retrieve the name of the user specified color. Use the node value of node[:identify][:color].
       # If that color is not in the supported_colors array, then use default color

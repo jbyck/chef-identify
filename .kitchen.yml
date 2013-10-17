@@ -17,3 +17,11 @@ suites:
   attributes: 
     identify:
       color: red
+- name: node_name
+  run_list:
+    - recipe[identify::system_install]
+    - recipe[minitest-handler]
+  attributes:
+    identify:
+      color: blue
+      use_node_name: true
